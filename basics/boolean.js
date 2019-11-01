@@ -3,21 +3,25 @@
 // < - less than operator
 // > - greater than operator
 
-let temp = 32
-let isFreezing = temp <= 32
+let temp = 450
 
-console.log(isFreezing)
+if (temp <= 32) {
+    console.log('It is freezing outside!')
+} else if (temp >= 110) {
+    console.log('It is way too hot outside!')
+} else {
+    console.log('Go for it! It\'s pretty nice out')
+}
 
 // Challenge area
 
-// Create age variable set to your age
-// Calculate isChild - 7 or under
-// Calculate isSenior - 65 or older
-// Print isChild and isSenior values
-let age = 32
+let age = 4
 
-let isChild = age <= 7
-let isSenior = age >= 65
-
-console.log('isChild? ' + isChild)
-console.log('isSenior? ' + isSenior)
+// If 7 or under, print message about child pricing
+if (age <= 7) {
+    console.log('Eligible for child discount')
+}
+// If 65 or older print message about senior discount
+if (age >= 65) {
+    console.log('Eligible for senior discount')
+}
