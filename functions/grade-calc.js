@@ -2,9 +2,9 @@
 // 15/20 -> You got a C (75%)!
 // A 100-90, B 80-89, C 70-79, D 60-69, F 0-59
 
-let getStudentGrade = function (score, possible) {
-    let grade = score / possible * 100
-    let gradeLetter
+const getStudentGrade = function (score, possible) {
+    const grade = score / possible * 100
+    let gradeLetter = ''
 
     if (grade > 100 || grade < 0) {
         return 'Please enter valid grade between 0 and 100'
