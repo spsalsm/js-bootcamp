@@ -1,40 +1,8 @@
-let todos = []
+const todos = getSavedTodos()
 
 const filters = {
     searchText: '',
     hideCompleted: false
-}
-
-const todosJSON = localStorage.getItem('todos')
-
-if (todosJSON !== null) {
-    todos = JSON.parse(todosJSON)
-}
-
-const renderTodos = function (todos, filters) {
-    const todoEl = document.querySelector('#todos')
-    const filteredTodos = todos.filter(function (todo) {
-        return todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
-    })
-
-    let visibleTodos = filteredTodos
-    if (filters.hideCompleted) {
-        visibleTodos = filteredTodos.filter(function (todo) {
-            return !todo.completed
-        })
-    }
-    
-    document.querySelector('#todos').innerHTML = ''
-
-    const todosLeft = document.createElement('h2')
-    todosLeft.textContent = `You have ${visibleTodos.length} todos left`
-    todoEl.appendChild(todosLeft)
-
-    visibleTodos.forEach(function (todo) {
-        const todoParagraph = document.createElement('p')
-        todoParagraph.textContent = todo.text
-        todoEl.appendChild(todoParagraph)
-    })
 }
 
 renderTodos(todos, filters)
@@ -49,11 +17,12 @@ document.querySelector('#todo-filter').addEventListener('input', function (e) {
 document.querySelector('#new-todo').addEventListener('submit', function (e) {
     e.preventDefault()
     todos.push({
+        id: uuidv4(),
         text: e.target.elements.todoText.value,
         completed: false
     })
     e.target.elements.todoText.value = ''
-    localStorage.setItem('todos', JSON.stringify(todos))
+    saveTodos(todos)
     renderTodos(todos, filters)
 })
 
