@@ -16,21 +16,22 @@ const saveTodos = function (todos) {
 
 // Render application todos based on filters
 const renderTodos = function (todos, filters) {
+    
     const filteredTodos = todos.filter(function (todo) {
-        return todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
+        const hideCompletedMatch = !filters.hideCompleted || !todo.completed
+
+        return searchTextMatch && hideCompletedMatch
     })
 
-    let visibleTodos = filteredTodos
-    if (filters.hideCompleted) {
-        visibleTodos = filteredTodos.filter(function (todo) {
-            return !todo.completed
-        })
-    }
+    const incompleteTodos = filteredTodos.filter(function (todo) {
+        return !todo.completed        
+    })
     
     document.querySelector('#todos').innerHTML = ''
-    document.querySelector('#todos').appendChild(generateSummaryDOM(visibleTodos))
+    document.querySelector('#todos').appendChild(generateSummaryDOM(incompleteTodos))
 
-    visibleTodos.forEach(function (todo) {
+    filteredTodos.forEach(function (todo) {
         document.querySelector('#todos').appendChild(generateTodoDOM(todo))
     })
 }
@@ -44,7 +45,13 @@ const generateTodoDOM = function (todo) {
 
     // Setup todo checkbox    
     checkbox.setAttribute('type', 'checkbox')
+    checkbox.checked = todo.completed
     todoEl.appendChild(checkbox)
+    checkbox.addEventListener('change', function () {
+        toggleTodo(todo.id)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
 
     // Setup the todo text    
     text.textContent = todo.text
@@ -62,7 +69,18 @@ const generateTodoDOM = function (todo) {
     return todoEl
 }
 
-// Remove a todo
+// Toggle completed value for todo by id
+const toggleTodo = function (id) {
+    const todo = todos.find(function (todo) {
+        return todo.id === id
+    })
+
+    if (todo !== undefined) {
+        todo.completed = !todo.completed
+    }
+}
+
+// Remove todo by id
 const removeTodo = function (id) {
     const todoIndex = todos.findIndex(function (todo) {
         return todo.id === id
