@@ -3,12 +3,12 @@
 // A 100-90, B 80-89, C 70-79, D 60-69, F 0-59
 
 const getStudentGrade = function (score, possible) {
+    if (typeof score !== 'number' || typeof possible !== 'number') {
+        throw Error('Please provide numbers only')
+    }
+
     const grade = score / possible * 100
     let gradeLetter = ''
-
-    if (grade > 100 || grade < 0) {
-        return 'Please enter valid grade between 0 and 100'
-    }
 
     if (grade >= 90) {
         gradeLetter = 'A'
@@ -25,12 +25,9 @@ const getStudentGrade = function (score, possible) {
     return `You got a ${gradeLetter} (${grade}%)!`
 }
 
-let gradeOne = getStudentGrade(15, 20)
-let gradeTwo = getStudentGrade(40, 100)
-let gradeThree = getStudentGrade(38, 50)
-let gradeFour = getStudentGrade(344, 14)
-
-console.log(gradeOne)
-console.log(gradeTwo)
-console.log(gradeThree)
-console.log(gradeFour)
+try {
+    const result = getStudentGrade(18, 20)
+    console.log(result)
+} catch (e) {
+    console.log(e.message)
+}
