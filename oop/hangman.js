@@ -1,10 +1,17 @@
 const Hangman = function (word, remainingGuesses) {
-    this.word = word
+    this.word = word.toLowerCase().split('')
     this.remainingGuesses = remainingGuesses
+    this.guessedLetters = []
 }
 
-const hangman1 = new Hangman('obstreporous', 5)
-const hangman2 = new Hangman('vindicate', 4)
+Hangman.prototype.getPuzzle = function () {
+    let puzzle = '*' * this.word.length
+    return puzzle
+}
 
-console.log(hangman1)
+const hangman1 = new Hangman('ObStRepErous', 5)
+const hangman2 = new Hangman('vinDIcate', 4)
+
+console.log(hangman1.word)
 console.log(hangman2)
+console.log(hangman1.getPuzzle())
