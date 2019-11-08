@@ -3,8 +3,8 @@ const guessesEl = document.querySelector('#guesses')
 const game1 = new Hangman('New Jersey', 4)
 
 const renderGame = () => {
-    puzzleEl.textContent = game1.getPuzzle()
-    guessesEl.textContent = game1.getStatusMessage()
+    puzzleEl.textContent = game1.puzzle
+    guessesEl.textContent = game1.statusMessage
 }
 
 renderGame()
