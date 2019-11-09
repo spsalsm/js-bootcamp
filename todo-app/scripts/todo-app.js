@@ -18,14 +18,17 @@ document.querySelector('#todo-filter').addEventListener('input', (e) => {
 // Submit button event handler for new todo form
 document.querySelector('#new-todo').addEventListener('submit', (e) => {
     e.preventDefault()
-    todos.push({
-        id: uuidv4(),
-        text: e.target.elements.todoText.value,
-        completed: false
-    })
-    e.target.elements.todoText.value = ''
-    saveTodos(todos)
-    renderTodos(todos, filters)
+    const text = e.target.elements.todoText.value.trim()
+    if (text.length > 0) {
+        todos.push({
+            id: uuidv4(),
+            text,
+            completed: false
+        })
+        e.target.elements.todoText.value = ''
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    }
 })
 
 document.querySelector('#hide-completed').addEventListener('change', (e) => {

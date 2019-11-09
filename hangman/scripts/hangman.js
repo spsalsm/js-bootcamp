@@ -51,7 +51,7 @@ class Hangman {
         let message = ''
 
         if (this.status === 'playing') {
-            message = `Remaining guesses: ${this.remainingGuesses}`
+            message = `Guesses left: ${this.remainingGuesses}`
         } else if (this.status === 'failed') {
             message = `Nice try! The word was "${this.word.join('')}"`
         } else {

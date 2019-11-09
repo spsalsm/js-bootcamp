@@ -9,8 +9,14 @@ const startGame = async () => {
 }
 
 const renderGame = () => {
-    puzzleEl.textContent = game.puzzle
+    puzzleEl.innerHTML = ''
     guessesEl.textContent = game.statusMessage
+
+    game.puzzle.split('').forEach((letter) => {
+        const letterEl = document.createElement('span')
+        letterEl.textContent = letter
+        puzzleEl.appendChild(letterEl)
+    })
 }
 
 document.querySelector('#reset').addEventListener('click', startGame)
