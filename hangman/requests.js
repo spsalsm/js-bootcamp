@@ -1,38 +1,41 @@
-const getPuzzle = (wordCount) => {
-    return fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`).then((response) => {
-        if (response.status === 200) {
-            return response.json()
-        } else {
-            throw new Error('Unable to fetch puzzle')
-        }
-    }).then((data) => {
+const getPuzzle = async (wordCount) => {
+    const response = await fetch(`http://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
+    
+    if (response.status === 200) {
+        const data = await response.json()
         return data.puzzle
-    })
+    } else {
+        throw new Error('Unable to get puzzle')
+    }
 }
 
-const getCountry = (countryCode) => {
-    return fetch('http://restcountries.eu/rest/v2/all').then((response) => {
-        if (response.status === 200) {
-            return response.json()
-        } else {
-            throw new Error('Unable to fetch country')
-        }
-    }).then((data) => {
+const getCountry = async (countryCode) => {
+    const response = await fetch('http://restcountries.eu/rest/v2/all')
+
+    if (response.status === 200) {
+        const data = await response.json()
         const country = data.find((country) => country.alpha2Code === countryCode)
         if (country) {
             return country
         } else {
             throw new Error('Country code not found')
         }
-    })
+    } else {
+        throw new Error('Unable to fetch country')
+    }
 }
 
-const getLocation = () => {
-    return fetch('https://ipinfo.io/json?token=9b465d80ee3f50').then((response) => {
-        if (response.status === 200) {
-            return response.json()
-        } else {
-            throw new Error('Unable to fetch IP location info')
-        }
-    })
+const getLocation = async () => {
+    const response = await fetch('https://ipinfo.io/json?token=9b465d80ee3f50')
+
+    if (response.status === 200) {
+        return response.json()
+    } else {
+        throw new Error('Unable to get IP location info')
+    }
+}
+
+const getCurrentCountry = async () => {
+    const location = await getLocation()
+    return getCountry(location.country)
 }
