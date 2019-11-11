@@ -3,10 +3,9 @@ import { getFilters } from "./filters"
 
 // Render application todos based on filters
 const renderTodos = () => {
-    const todos = getTodos()
     const filters = getFilters()
     const todoEl = document.querySelector('#todos')
-    const filteredTodos = todos.filter((todo) => {
+    const filteredTodos = getTodos().filter((todo) => {
         const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase())
         const hideCompletedMatch = !filters.hideCompleted || !todo.completed
 
@@ -76,3 +75,5 @@ const generateSummaryDOM = (todos) => {
     summary.classList.add('list-title')
     return summary
 }
+
+export { renderTodos, generateTodoDOM, generateSummaryDOM }
