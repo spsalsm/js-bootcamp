@@ -20,13 +20,8 @@ document.querySelector('#new-todo').addEventListener('submit', (e) => {
     e.preventDefault()
     const text = e.target.elements.todoText.value.trim()
     if (text.length > 0) {
-        todos.push({
-            id: uuidv4(),
-            text,
-            completed: false
-        })
+        createTodo(text)
         e.target.elements.todoText.value = ''
-        saveTodos(todos)
         renderTodos(todos, filters)
     }
 })
